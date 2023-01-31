@@ -1,7 +1,7 @@
 const graphql = require("graphql");
 const mongoose = require("mongoose");
-const CategoryType = require("./category_type");
-const Category = mongoose.model("category");
+
+const Category = require("../../models/Category");
 const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLInt } = graphql;
 
 const ProductType = new GraphQLObjectType({
@@ -12,7 +12,7 @@ const ProductType = new GraphQLObjectType({
         description: { type: GraphQLString },
         weight: { type: GraphQLInt },
         category: {
-            type: CategoryType,
+            type: require("./category_type"),
             resolve(parentValue) {
                 return Category.findById(parentValue.category)
                     .then(category => category)
