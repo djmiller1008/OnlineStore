@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const db = require("../config/keys.js").MONGO_URI;
 
+
 const app = express();
 
 if (!db) {
@@ -13,6 +14,18 @@ mongoose
   .connect(db, { useNewUrlParser: true })
   .then(() => console.log("Connected to MongoDB successfully"))
   .catch(err => console.log(err));
+
+const expressGraphQL = require("express-graphql").graphqlHTTP;
+const schema = require("./schema/schema");
+
+
+app.use(
+  "/graphql",
+  expressGraphQL({
+    schema,
+    graphiql: true
+  })
+);
 
 app.use(bodyParser.json());
 
