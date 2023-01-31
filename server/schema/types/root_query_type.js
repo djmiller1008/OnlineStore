@@ -6,9 +6,9 @@ const UserType = require("./user_type");
 const CategoryType = require("./category_type");
 const ProductType = require("./product_type");
 
-const User = mongoose.model("user");
-const Category = mongoose.model("category");
-const Product = mongoose.model("product");
+const User = require("../../models/User");
+const Category = require("../../models/Category");
+const Product = require("../../models/Product");
 
 const RootQueryType = new GraphQLObjectType({
     name: "RootQueryType",
