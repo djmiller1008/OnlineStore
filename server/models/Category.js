@@ -15,4 +15,10 @@ const CategorySchema = new Schema({
     ]
 });
 
+CategorySchema.statics.getProducts = categoryId => {
+    const Category = mongoose.model("category");
+    return Category.findById(categoryId)
+        .populate('products')
+        .then(category => category.products)
+}
 module.exports = mongoose.model("category", CategorySchema);
