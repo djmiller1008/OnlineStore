@@ -51,6 +51,17 @@ const mutations = new GraphQLObjectType({
         resolve(parentValue, { id }) {
             return Product.findOneAndDelete({ _id: id })
         }
+    },
+
+    updateProductCategory: {
+        type: ProductType,
+        args: {
+            productId: { type: GraphQLID },
+            categoryId: { type: GraphQLID }
+        },
+        resolve(parentValue, { productId, categoryId }) {
+            return Product.updateProductCategory(productId, categoryId);
+        }
     }
   }
 });
