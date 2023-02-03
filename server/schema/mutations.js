@@ -23,6 +23,16 @@ const mutations = new GraphQLObjectType({
         }
     },
 
+    logout: {
+        type: UserType,
+        args: {
+            _id: { type: GraphQLID }
+        },
+        resolve(parentValue, args) {
+            return AuthService.logout(args);
+        }
+    },
+
     newCategory: {
         type: CategoryType,
         args: {
