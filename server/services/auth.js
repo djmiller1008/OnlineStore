@@ -46,5 +46,20 @@ const register = async data => {
     }
 };
 
-module.exports = { register };
+const logout = async data => {
+    try {
+        const { _id } = data;
+        const user = await User.findById(_id);
+
+        if (!user) throw new Error("This user does not exist");
+
+        const token = "";
+
+        return { token, loggedIn: false, ...user._doc, password: null };
+    } catch (err) {
+        throw err;
+    }
+};
+
+module.exports = { register, logout };
 
