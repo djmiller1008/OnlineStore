@@ -44,6 +44,16 @@ const mutations = new GraphQLObjectType({
         }
     },
 
+    verifyUser: {
+        type: UserType,
+        args: {
+            token: { type: GraphQLString }
+        },
+        resolve(parentValue, args) {
+            return AuthService.verifyUser(args);
+        }
+    },
+
     newCategory: {
         type: CategoryType,
         args: {
