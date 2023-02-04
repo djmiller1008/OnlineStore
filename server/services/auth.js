@@ -4,6 +4,7 @@ const User = require("../models/User");
 const keys = require("../../config/keys");
 
 const validateRegisterInput = require("../validation/register");
+const validateLoginInput = require("../validation/login");
 
 const register = async data => {
     try {
@@ -61,5 +62,33 @@ const logout = async data => {
     }
 };
 
-module.exports = { register, logout };
+const login = async data => {
+    try {
+        const { message, isValid } = validateLoginInput(data);
+
+        if (!isValid) {
+            throw new Error(message);
+        }
+
+        const { email, password } = data;
+        const user = await User.findOne({ email: email });
+
+        if (!user) {
+            throw new Error("This user does not exist");
+        }
+
+        if (bcrypt.compareSync(password, user.password)) {
+            const token = jwt.sign({ id: user._id}, keys.secretOrKey);
+
+            return { token, loggedIn: true, ...user._doc, password: null };
+
+        }
+
+
+    } catch (err) {
+        throw err;
+    }
+}
+
+module.exports = { register, logout, login };
 
